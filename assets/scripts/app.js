@@ -21,6 +21,31 @@ adjustHealthBars(STARTING_HEALTH);
 
 
 // core game logic
+function addLife() {
+  
+  if (!hasBounusLife) {
+    
+    const playerData = document.querySelector("#health-levels h2:nth-of-type(2)");
+    const spanElm = document.createElement("span");
+    const spanValue = document.createTextNode("1");
+
+    spanElm.appendChild(spanValue);
+    spanElm.setAttribute("id", "bonus-life");
+    playerData.appendChild(spanElm);
+
+  }
+
+  return
+}
+
+function reset() {
+
+  monsterHealth = MAX_HEALTH;
+  playerHealth = MAX_HEALTH;
+  resetGame(MAX_HEALTH);
+  addLife();
+}
+
 function removeEvents() {
   attackBtn.removeEventListener('click', attackHandler);
   strongAttackBtn.removeEventListener('click', strongAttackHandler);
@@ -46,13 +71,16 @@ function endRound() {
 
   if (monsterHealth <= 0 && playerHealth > 0) {
     alert("You WIN!");
-    removeEvents();
+    // removeEvents();
+    reset();
   } else if (playerHealth <= 0 && monsterHealth > 0) {
     alert("You LOST!");
-    removeEvents();
+    // removeEvents();
+    reset();
   } else if (playerHealth <= 0 && monsterHealth <= 0) {
     alert("ITS A DRAW!");
-    removeEvents();
+    // removeEvents();
+    reset();
   }
 
   return
