@@ -5,45 +5,47 @@ const STRONG_ATTACK_VALUE = 17;
 const MONSTER_ATTACK_VALUE = 14;
 const HEAL_VALUE = 5;
 const INPUT_HEALTH = prompt("Enter the max life for you and the moster");
+const STARTING_HEALTH = INPUT_HEALTH ? +INPUT_HEALTH: MAX_HEALTH;
+
 // Attack types
 const ATTACK = "ATTACK";
 const STRONG_ATTACK = "STRONG ATTACK";
 
 // varying data
-let monsterHealth = MAX_HEALTH;
-let playerHealth = MAX_HEALTH;
+let monsterHealth = STARTING_HEALTH;
+let playerHealth = STARTING_HEALTH;
 let hasBounusLife = true;
 
 //  init game
-console.log(typeof(INPUT_HEALTH))
-const STARTING_HEALTH = INPUT_HEALTH ? +INPUT_HEALTH: MAX_HEALTH;
 adjustHealthBars(STARTING_HEALTH);
 
 
 // core game logic
 function addLife() {
-  
-  if (!hasBounusLife) {
 
-    const playerData = document.querySelector("#health-levels h2:nth-of-type(2)");
-    const spanElm = document.createElement("span");
-    const spanValue = document.createTextNode("1");
+  const playerData = document.querySelector("#health-levels h2:nth-of-type(2)");
+  const spanElm = document.createElement("span");
+  const spanValue = document.createTextNode("1");
 
-    spanElm.appendChild(spanValue);
-    spanElm.setAttribute("id", "bonus-life");
-    playerData.appendChild(spanElm);
-
-  }
+  spanElm.appendChild(spanValue);
+  spanElm.setAttribute("id", "bonus-life");
+  playerData.appendChild(spanElm);
 
   return
 }
 
 function reset() {
 
-  monsterHealth = MAX_HEALTH;
-  playerHealth = MAX_HEALTH;
-  resetGame(MAX_HEALTH);
-  addLife();
+  monsterHealth = INPUT_HEALTH;
+  playerHealth = INPUT_HEALTH;
+  resetGame(INPUT_HEALTH);
+
+  if (!hasBounusLife) {
+    addLife();
+    hasBounusLife = true;
+  }
+
+  return
 }
 
 function removeEvents() {
@@ -57,7 +59,7 @@ function endRound() {
   const  playerDamage = dealPlayerDamage(MONSTER_ATTACK_VALUE);
   playerHealth -= playerDamage;
 
-  if (playerHealth <= 0 && hasBounusLife) {
+  if (playerHealth <= 0 && hasBounusLife && monsterHealth > 0) {
 
     alert("Using bonus life!");
     
