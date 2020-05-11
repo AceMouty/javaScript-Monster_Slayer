@@ -4,19 +4,19 @@ const ATTACK_VALUE = 10;
 const STRONG_ATTACK_VALUE = 17;
 const MONSTER_ATTACK_VALUE = 14;
 const HEAL_VALUE = 5;
-
+const INPUT_HEALTH = prompt("Enter the max life for you and the moster");
 // Attack types
 const ATTACK = "ATTACK";
 const STRONG_ATTACK = "STRONG ATTACK";
 
 // varying data
-let inputHealth;
 let monsterHealth = MAX_HEALTH;
 let playerHealth = MAX_HEALTH;
 let hasBounusLife = true;
 
 //  init game
-const STARTING_HEALTH = inputHealth || MAX_HEALTH;
+console.log(typeof(INPUT_HEALTH))
+const STARTING_HEALTH = INPUT_HEALTH ? +INPUT_HEALTH: MAX_HEALTH;
 adjustHealthBars(STARTING_HEALTH);
 
 
@@ -24,7 +24,7 @@ adjustHealthBars(STARTING_HEALTH);
 function addLife() {
   
   if (!hasBounusLife) {
-    
+
     const playerData = document.querySelector("#health-levels h2:nth-of-type(2)");
     const spanElm = document.createElement("span");
     const spanValue = document.createTextNode("1");
