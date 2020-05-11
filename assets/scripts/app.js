@@ -13,6 +13,7 @@ const STRONG_ATTACK = "STRONG ATTACK";
 let inputHealth;
 let monsterHealth = MAX_HEALTH;
 let playerHealth = MAX_HEALTH;
+let hasBounusLife = true;
 
 //  init game
 const STARTING_HEALTH = inputHealth || MAX_HEALTH;
@@ -20,18 +21,38 @@ adjustHealthBars(STARTING_HEALTH);
 
 
 // core game logic
+function removeEvents() {
+  attackBtn.removeEventListener('click', attackHandler);
+  strongAttackBtn.removeEventListener('click', strongAttackHandler);
+  healBtn.removeEventListener('click', healHandler);
+}
 
 function endRound() {
   // Attack the player
   const  playerDamage = dealPlayerDamage(MONSTER_ATTACK_VALUE);
   playerHealth -= playerDamage;
 
+  if (playerHealth <= 0 && hasBounusLife) {
+
+    alert("Using bonus life!");
+    
+    removeBonusLife();
+    hasBounusLife = false;
+    playerHealth += 20;
+    setPlayerHealth(playerHealth);
+  
+    return
+  }
+
   if (monsterHealth <= 0 && playerHealth > 0) {
-    alert("You win!");
+    alert("You WIN!");
+    removeEvents();
   } else if (playerHealth <= 0 && monsterHealth > 0) {
-    alert("You DIED!");
+    alert("You LOST!");
+    removeEvents();
   } else if (playerHealth <= 0 && monsterHealth <= 0) {
     alert("ITS A DRAW!");
+    removeEvents();
   }
 
   return
@@ -86,4 +107,4 @@ function healHandler() {
 
 attackBtn.addEventListener('click', attackHandler);
 strongAttackBtn.addEventListener('click', strongAttackHandler);
-healBtn.addEventListener('click', healHandler)
+healBtn.addEventListener('click', healHandler);
